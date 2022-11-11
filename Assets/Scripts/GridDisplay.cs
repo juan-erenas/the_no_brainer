@@ -2,21 +2,25 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Grid
+public class GridDisplay
 {
     private int _width;
     private int _height;
     private float _unitWidth;
     private List<GameObject> _gridLineRenderers;
     private Vector3 _origin;
+    private Material _material;
 
-    public Grid(int width, int height, float unitWidth, Vector3 origin)
+    private Color _startColor = new Color(0.1f, 0.1f, 0.1f);
+    private Color _endColor = new Color(0.1f, 0.1f, 0.1f);
+
+    public GridDisplay(int width, int height, float unitWidth, Vector3 origin, Material material)
     {
         _width = width;
         _height = height;
         _unitWidth = unitWidth;
         _origin = origin;
-
+        _material = material;
     }
 
     public List<GameObject> AddGridLines()
@@ -65,6 +69,17 @@ public class Grid
         lineRenderer.startWidth = lineWidth;
         lineRenderer.endWidth = lineWidth;
         lineRenderer.SetPositions(positions);
+
+        float alpha = 1.0f;
+        Gradient gradient = new Gradient();
+        gradient.SetKeys(
+            new GradientColorKey[] { new GradientColorKey(_startColor, 0.0f), new GradientColorKey(_endColor, 1.0f) },
+            new GradientAlphaKey[] { new GradientAlphaKey(alpha, 0.0f), new GradientAlphaKey(alpha, 1.0f) }
+        );
+
+        lineRenderer.colorGradient = gradient;
+
+        lineRenderer.material = _material;
 
         lineRenderer.useWorldSpace = false;
 

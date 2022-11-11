@@ -4,14 +4,16 @@ using UnityEngine;
 
 public class PlacementHandler : MonoBehaviour
 {
-    private Grid _grid;
+    private GridDisplay _grid;
     private int _gridWidth = 20;
     private int _gridHeight = 10;
     private float _unitWidth = 1f;
 
+    [SerializeField] Material LineMaterial;
+
     void Start()
     {
-        _grid = BuildGrid(_gridWidth, _gridHeight, _unitWidth, this.transform.position);
+        _grid = BuildGrid(_gridWidth, _gridHeight, _unitWidth, this.transform.position, LineMaterial);
     }
 
     void Update()
@@ -19,13 +21,13 @@ public class PlacementHandler : MonoBehaviour
         
     }
 
-    public Grid BuildGrid(int width, int height, float unitWidth, Vector3 origin)
+    public GridDisplay BuildGrid(int width, int height, float unitWidth, Vector3 origin, Material material)
     {
         GameObject emptyObject = new GameObject();
         emptyObject.transform.parent = this.transform;
         emptyObject.name = "GridLines";
 
-        Grid newGrid = new Grid(width, height, unitWidth, origin);
+        GridDisplay newGrid = new GridDisplay(width, height, unitWidth, origin, material);
         List<GameObject> gridLines = newGrid.AddGridLines();
 
         for (int i = 0; i < gridLines.Count; i ++)
