@@ -80,6 +80,7 @@ public class Grid
         for (int i = 0; i < coords.Count; i ++)
         {
             _grid[coords[i].X][coords[i].Y] = false;
+            Debug.Log("Removed coord at X: " + coords[i].X + " Y: " + coords[i].Y);
         }
     }
 

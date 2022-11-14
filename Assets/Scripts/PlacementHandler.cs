@@ -10,6 +10,8 @@ public class PlacementHandler : MonoBehaviour
     private int _gridHeight = 10;
     private float _cellSize = 1f;
 
+    private bool _shouldGetPos = false;
+
     [SerializeField] GameObject Pointer;
 
     [SerializeField] Material LineMaterial;
@@ -18,14 +20,17 @@ public class PlacementHandler : MonoBehaviour
     {
         _gridDisplay = BuildGridDisplay(_gridWidth, _gridHeight, _cellSize, this.transform.position, LineMaterial);
         _grid = BuildGrid(_gridWidth, _gridHeight, _cellSize, this.transform.position);
-
-        var canBePlaced = _grid.CanBePlaced(Pointer.transform.position, 3, 3);
-        Debug.Log("Can be placed: " + canBePlaced.Item2 + " at position: X " + canBePlaced.Item1.x + " Y " + canBePlaced.Item1.y);
     }
 
     void Update()
     {
+
         
+    }
+
+    public (Vector3, bool) CanBePlaced(Vector3 position, int widthInUnits, int heightInUnits)
+    {
+        return _grid.CanBePlaced(position, widthInUnits, heightInUnits);
     }
 
     private Grid BuildGrid(int width, int height, float cellSize, Vector3 origin)
