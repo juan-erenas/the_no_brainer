@@ -5,10 +5,11 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    [SerializeField] PlacementHandler PlacementHandler;
+    [SerializeField] private PlacementHandler _placementHandler;
+    [SerializeField] private MachineFactory _machineFactory;
 
-    public event EventHandler mouseInteractedWithMachine;
-    public event EventHandler mouseMovedEvent;
+    private event EventHandler _mouseInteractedWithMachine;
+    private event EventHandler _mouseMovedEvent;
 
     private bool _isDraggingMachine = false;
 
@@ -24,14 +25,14 @@ public class GameManager : MonoBehaviour
     {
         if (_isDraggingMachine)
         {
-            var canBePlaced = PlacementHandler.CanBePlaced(GetMousePos(), 1, 1);
+            var canBePlaced = _placementHandler.CanBePlaced(GetMousePos(), 1, 1);
         }
     }
-
 
     private Vector3 GetMousePos()
     {
         return Camera.main.ScreenToWorldPoint( Input.mousePosition );
     }
+
 
 }
